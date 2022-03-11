@@ -119,7 +119,7 @@ const NavMenu = styled.div`
     .fa-hands,
     .fa-seedling,
     .fa-phone-alt {
-      color: #800080;
+      color: #c2309c;
     }
 
     span {
@@ -127,11 +127,11 @@ const NavMenu = styled.div`
       font-size: 15px;
       line-height: 1.42px;
       position: relative;
-      color: #800080;
+      color: #C2309C;
       &:after {
         content: "";
         height: 2px;
-        background: #800080;
+        background: #C2309C;
         position: absolute;
         right: 0;
         left: 0;
@@ -144,7 +144,7 @@ const NavMenu = styled.div`
     }
 
     &:hover {
-      color: #800080;
+      color: #C2309C;
       span:after {
         transform: scaleX(1);
         opacity: 1;
@@ -177,7 +177,7 @@ const BurgerNav = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  background: #800080;
+  background: #C2309C;
   width: 300px;
   z-index: 16;
   padding: 20px;

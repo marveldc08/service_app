@@ -1,0 +1,32 @@
+
+.signIn__form{
+    width: 36%;
+}
+
+.signIn__formControl{
+    margin-bottom: 12px !important;
+    width: 100% !important;
+}
+
+.signIn__button{
+    color: #c2309c !important;
+    border: 1px solid #c2309c !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 6px !important;
+    margin-bottom: 8px !important;
+}
+.signIn__button:hover{
+        text-decoration: none !important;
+        background-color: #c2309c !important;
+        color: #ffffff !important;
+    }
+
+
+@media screen and (max-width: 920px){
+    .signIn__form{
+    width: 90%;
+}
+}

@@ -24,12 +24,37 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #800080;
+  background: #C2309C;
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d13fb2+0,c12f9a+41,98006a+67,dd1d9d+100 */
+  background: #d13fb2; /* Old browsers */
+  background: -moz-linear-gradient(
+    -45deg,
+    #d13fb2 0%,
+    #c12f9a 41%,
+    #98006a 67%,
+    #dd1d9d 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    #d13fb2 0%,
+    #c12f9a 41%,
+    #98006a 67%,
+    #dd1d9d 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    #d13fb2 0%,
+    #c12f9a 41%,
+    #98006a 67%,
+    #dd1d9d 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d13fb2', endColorstr='#dd1d9d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
   i {
     position: absolute;
     bottom: 8em;
-    color: #800080;
+    color: #C2309C;
   }
 `;
 const Wrap = styled.div`
@@ -51,8 +76,8 @@ const Continue = styled.a`
   background-color: none;
   font-weight: bold;
   padding: 17px 0;
-  color: #800080;
-  border: 1px solid #800080;
+  color: #C2309C;
+  border: 1px solid #C2309C;
   border-radius: 6px;
   text-align: center;
   font-size: 20px;
@@ -64,7 +89,7 @@ const Continue = styled.a`
   z-index: 1;
 
   &:hover {
-    background: #800080;
+    background: #C2309C;
     text-decoration: none;
     color: #f9f9f9;
   }
