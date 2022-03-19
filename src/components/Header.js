@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth, logOut } from '../firebase'
 
 import styled from 'styled-components'
 
@@ -7,7 +9,19 @@ import styled from 'styled-components'
 
 
 function Header() {
+
+  const currentUser = useAuth();
   const [burgernav, setBurgernav] = useState(false);
+  const navigate = useNavigate();
+  console.log(currentUser);
+  const handleLogOut = async () => {
+    try{
+      await logOut();
+      navigate('/')
+    } catch {
+      alert("error!");
+    }
+  }
 
     return (
       <Nav>
@@ -83,7 +97,7 @@ function Header() {
           </a>
         </NavMenu>
 
-        <UserImg src="/images/user.jpg" />
+        <UserImg onClick={handleLogOut} src="/images/user.jpg" /> <p>{currentUser?.displayName}</p>
       </Nav>
       
     );

@@ -1,36 +1,128 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { auth, provider, signIn } from "../firebase";
+import {
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup
+} from "firebase/auth";
+
+import { getPerformance } from "firebase/performance"; 
+import { selectUserName, selectUserEmail, selectUserPhoto, setUserLogIn, setUserLogOut } from '../features/user/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from 'react-router-dom';
 
 import { FormControl, Button, Input, InputLabel } from "@mui/material";
 import styled from 'styled-components';
-
 import './SignIn.css'
 
 function SignIn() {
+
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+  const navigate = useNavigate()
+
+  const emailRef = useRef('');
+  const passwordRef = useRef('');
+
+
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider).then((result) => {
+      console.log(result);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+
+      dispatch(
+        setUserLogIn({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        })
+      );
+      // ...
+      navigate("/home");
+    }).catch((error) => {
+         // Handle Errors here.
+         const errorCode = error.code;
+         const errorMessage = error.message;
+         // The email of the user's account used.
+         const email = error.email;
+         // The AuthCredential type that was used.
+         const credential = GoogleAuthProvider.credentialFromError(error);
+         // ...
+       });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          setUserLogIn({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        // ...
+      }
+    });
+  }, []);
+
+  const handleSignin = async (event) => {
+    event.preventDefault();
+    try {
+      await signIn(emailRef.current.value, passwordRef.current.value)
+        .then((result) => {
+          console.log(result);
+          navigate("/home");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch {
+      alert("error!");
+    }
+  };
+    
+    
+
+  const logOut = () => {
+    auth.signOut().then(() => {
+      dispatch(setUserLogOut({ name: "", email: "", photo: "" }));
+      navigate("/");
+    });
+  };
+
   return (
     <Container>
       <Top>
-        <SignUp>SignUp</SignUp>
+        <SignUp href="/signup">SignUp</SignUp>
       </Top>
 
       <h3>LogIn</h3>
 
-      <form className='signIn__form'>
+      <form className="signIn__form">
         <FormControl className="signIn__formControl">
           <InputLabel htmlFor="email">Email address</InputLabel>
-          <Input id="email" />
+          <Input inputRef={emailRef} type="email" id="email" />
         </FormControl>
         <br />
         <FormControl className="signIn__formControl">
           <InputLabel htmlFor="password">Password</InputLabel>
-          <Input id="password" />
+          <Input inputRef={passwordRef} type="password" id="password" />
         </FormControl>
         <br />
-        <Button className='signIn__button'>LOGIN</Button>
+        <Button className="signIn__button" onClick={handleSignin}>
+          LOGIN
+        </Button>
       </form>
 
       <p>OR</p>
 
-      <GoogleLogin>Continue with Google</GoogleLogin>
+      <GoogleLogin onClick={signInWithGoogle}>Continue with Google</GoogleLogin>
     </Container>
   );
 }
@@ -71,7 +163,7 @@ const SignUp = styled.a`
   color: #c2309c;
   font-weight: bold;
   font-size: 1.2em;
-
+  text-decoration: none;
   &:hover {
     text-decoration: none;
     color: #c2309c;

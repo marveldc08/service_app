@@ -1,15 +1,19 @@
 import React from 'react'
-
+import { useNavigate, Link } from "react-router-dom";
 import styled from 'styled-components'
 
 function Landing() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Wrap>
         <Logo src="/images/logo.jpg" />
       </Wrap>
       <i>Bringing Comfort To Life</i>
-      <Continue>CONTINUE</Continue>
+
+      <Continue onClick={() => {navigate('/signin')}}> CONTINUE</Continue>
+
       <Design></Design>
     </Container>
   );
