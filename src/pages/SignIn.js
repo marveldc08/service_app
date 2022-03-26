@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { auth, provider, signIn } from "../firebase";
 import {
   onAuthStateChanged,
@@ -11,7 +11,7 @@ import { selectUserName, selectUserEmail, selectUserPhoto, setUserLogIn, setUser
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from 'react-router-dom';
 
-import { FormControl, Button, Input, InputLabel } from "@mui/material";
+import { FormControl, Button, Input, InputLabel, Alert, Stack } from "@mui/material";
 import styled from 'styled-components';
 import './SignIn.css'
 
@@ -24,6 +24,8 @@ function SignIn() {
 
   const emailRef = useRef('');
   const passwordRef = useRef('');
+  const [errorAlert, setErrorAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
 
 
 
@@ -76,11 +78,17 @@ function SignIn() {
     try {
       await signIn(emailRef.current.value, passwordRef.current.value)
         .then((result) => {
-          console.log(result);
           navigate("/home");
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(error => {
+          console.log(error.code); 
+         if (emailRef.current.value === '' || passwordRef.current.value === '' || error.code === 'auth/invalid-email') {
+                       setErrorAlert(true);
+                       setAlertContent("Invalid email or password!");
+          }else if(error.code === 'auth/wrong-password'){
+                        setErrorAlert(true);
+                        setAlertContent("Wrong Password!");
+          }
         });
     } catch {
       alert("error!");
@@ -99,11 +107,13 @@ function SignIn() {
   return (
     <Container>
       <Top>
-        <SignUp href="/signup">SignUp</SignUp>
+        <SignUp onClick={ () => {navigate("/signup")} }>Sign Up</SignUp>
       </Top>
-
-      <h3>LogIn</h3>
-
+      <Stack sx={{ width: '100%' }} className='errorAlert' spacing={2}>
+        {errorAlert ? <Alert onClose={() => {setErrorAlert(false);}}severity="error" >{alertContent} </Alert> :  <></> }
+      </Stack>
+      <br />
+      <h3>Log In</h3>
       <form className="signIn__form">
         <FormControl className="signIn__formControl">
           <InputLabel htmlFor="email">Email address</InputLabel>
@@ -116,10 +126,10 @@ function SignIn() {
         </FormControl>
         <br />
         <Button className="signIn__button" onClick={handleSignin}>
-          LOGIN
+          LOG IN
         </Button>
       </form>
-
+      <br />
       <p>OR</p>
 
       <GoogleLogin onClick={signInWithGoogle}>Continue with Google</GoogleLogin>
@@ -144,6 +154,11 @@ const Container = styled.div`
 
   p {
     text-align: center;
+  }
+  @media screen and (max-width: 768px) {
+    h3 {
+      font-size: 26px;
+    }
   }
 `;
 const Top = styled.div`

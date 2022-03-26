@@ -35,9 +35,27 @@
     margin-bottom: 8px !important;
 }
 
+.signUp__dialog{
+   background-color: rgb(224, 253, 244) !important;
+   color: rgb(2, 128, 86) !important;
+}
+.signUp__dialogButton{
+   color:rgb(2, 128, 86) !important;
+}
+.signUp__dialogButton:active{
+ border: none !important;
+}
+.errorAlert{
+    width: 50% !important;
+}
 
 @media screen and (max-width: 920px){
     .signIn__form{
-    width: 90%;
+       width: 90%;
+    }
 }
+@media screen and(max-width: 768px){
+    .errorAlert{
+        width: 100% !important;
+    }
 }

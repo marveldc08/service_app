@@ -13,7 +13,6 @@ function Header() {
   const currentUser = useAuth();
   const [burgernav, setBurgernav] = useState(false);
   const navigate = useNavigate();
-  console.log(currentUser);
   const handleLogOut = async () => {
     try{
       await logOut();
@@ -34,9 +33,7 @@ function Header() {
             ></i>
           </span>
         </LeftMenu>
-
         <Logo src="/images/logo.jpg" />
-
         <BurgerNav show={burgernav}>
           <Close>
             <span>
@@ -77,7 +74,6 @@ function Header() {
             <span>CopyRight 2022. All Rights Reserved.</span>
           </Foot>
         </BurgerNav>
-
         <NavMenu>
           <a>
             <i className="fas fa-home" aria-hidden="true"></i>
@@ -96,10 +92,8 @@ function Header() {
             <span>Contact Us</span>
           </a>
         </NavMenu>
-
-        <UserImg onClick={handleLogOut} src="/images/user.jpg" /> <p>{currentUser?.displayName}</p>
+        <UserImg onClick={handleLogOut} src={ currentUser?.photoURL } />
       </Nav>
-      
     );
 }
 
