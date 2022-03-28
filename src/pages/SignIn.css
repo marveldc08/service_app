@@ -46,7 +46,7 @@
  border: none !important;
 }
 .errorAlert{
-    width: 50% !important;
+    width: 38% !important;
 }
 
 @media screen and (max-width: 920px){
@@ -54,8 +54,8 @@
        width: 90%;
     }
 }
-@media screen and(max-width: 768px){
+@media screen and (max-width: 767px){
     .errorAlert{
-        width: 100% !important;
+        width: 90% !important;
     }
 }

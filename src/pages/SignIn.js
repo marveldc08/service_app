@@ -88,6 +88,9 @@ function SignIn() {
           }else if(error.code === 'auth/wrong-password'){
                         setErrorAlert(true);
                         setAlertContent("Wrong Password!");
+          }else if(error.code === 'auth/user-not-found'){
+             setErrorAlert(true);
+             setAlertContent("Account does not exist!");
           }
         });
     } catch {
@@ -109,7 +112,7 @@ function SignIn() {
       <Top>
         <SignUp onClick={ () => {navigate("/signup")} }>Sign Up</SignUp>
       </Top>
-      <Stack sx={{ width: '100%' }} className='errorAlert' spacing={2}>
+      <Stack  className='errorAlert' spacing={2}>
         {errorAlert ? <Alert onClose={() => {setErrorAlert(false);}}severity="error" >{alertContent} </Alert> :  <></> }
       </Stack>
       <br />
